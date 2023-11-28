@@ -22,9 +22,10 @@ def index():
     #create info for chart type, time series, and symbols
     
     symbols = read_csv()
-    chartTypes = ['1: Bar', '2: Line']
-    timeSers = ['1: Intraday', '2: Daily', '3: Weekly', '4: Monthly']
-    return render_template('index.html', symbols=symbols, chartTypes=chartTypes, timeSers=timeSers)
+    options = ['Admin Login', 'Reserve a Seat']
+    rows = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    seats = ['1', '2', '3', '4']
+    return render_template('index.html', options=options, rows=rows, seats=seats)
     
 @app.route('/charts/', methods=('GET', 'POST'))
 def charts():
