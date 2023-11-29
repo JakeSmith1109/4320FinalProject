@@ -5,17 +5,41 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT 4320 Reservation System</title>
+    <style>
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+    </style>
 </head>
 
 <body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+        <a href="{{ url_for('reservation') }}">Reservations</a>
+    </nav>
+    <hr>
     <h1>IT 4320 Reservation System</h1>
+    <form id="redirectForm" action="" method="post">
         <label for="option">Choose an Option:</label>
         <select id="option" name="option">
-            {% for option in options %}
-                <option value="{{ option }}">{{ option }}</option>
+            {% for option, url in options.items() %}
+                <option value="{{ url }}">{{ option }}</option>
             {% endfor %}
         </select>
         <br>
-        <input type="submit" value="submit">
+        <br>
+        <input type="button" value="Submit" onclick="redirectToSelectedPage()">
+    </form>
+
+    <script>
+        function redirectToSelectedPage() {
+            var selectedOption = document.getElementById("option").value;
+            window.location.href = selectedOption; // Redirect to the selected page
+        }
+    </script>
 </body>
 </html>
