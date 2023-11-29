@@ -21,33 +21,43 @@
         <a href="{{ url_for('admin') }}">Admin</a>
         <a href="{{ url_for('reservation') }}">Reservations</a>
     </nav>
+
     <hr>
     <h1>Make a Reservation</h1>
+    
     <form>
         <label for="firstName">First Name:</label>
         <input type="text" id="firstName">
+
         <br>
         <br>
+
         <label for="lastName">Last Name:</label>
         <input type="text" id="lastName">
+
         <br>
         <br>
+
         <label for="row">Choose a Row:</label>
         <select id="row" name="row">
             {% for row in rows %}
                 <option value="{{ row }}">{{ row }}</option>
             {% endfor %}
         </select>
+
         <br>
         <br>
+
         <label for="seat">Choose a Seat:</label>
         <select id="seat" name="seat">
             {% for seat in seats %}
                 <option value="{{ seat }}">{{ seat }}</option>
             {% endfor %}
         </select>
+
         <br>
         <br>
+
         <input type="submit" value="login">
     </form>
 </body>

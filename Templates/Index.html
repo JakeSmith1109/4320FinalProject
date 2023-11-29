@@ -21,8 +21,10 @@
         <a href="{{ url_for('admin') }}">Admin</a>
         <a href="{{ url_for('reservation') }}">Reservations</a>
     </nav>
+
     <hr>
     <h1>IT 4320 Reservation System</h1>
+
     <form id="redirectForm" action="" method="post">
         <label for="option">Choose an Option:</label>
         <select id="option" name="option">
@@ -30,8 +32,10 @@
                 <option value="{{ url }}">{{ option }}</option>
             {% endfor %}
         </select>
+
         <br>
         <br>
+        
         <input type="button" value="Submit" onclick="redirectToSelectedPage()">
     </form>
 
