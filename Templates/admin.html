@@ -24,21 +24,30 @@
 
     <hr>
     <h1>Admin Login</h1>
-    
-    <form>
+
+    <form action="{{ url_for('admin') }}" method="POST">
         <label for="username">Username:</label>
-        <input type="text" id="username">
+        <input type="text" id="username" name="username">
 
         <br>
         <br>
 
         <label for="password">Password:</label>
-        <input type="text" id="password">
+        <input type="text" id="password" name="password">
 
         <br>
         <br>
 
         <input type="submit" value="login">
     </form>
+
+    <div id="result">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p>{{ messages[0] }}</p>
+            {% endif %}
+        {% endwith %}
+    </div>
+
 </body>
 </html>
