@@ -33,25 +33,25 @@ def admin():
 
         # check the credentials against data in the passcodes.txt file
         if check_credentials(entered_username, entered_password):
-            # credentials are valid, flash a success message and redirect to the same page
+            # if credentials are valid, flash a success message and redirect to the same page
             flash("Login Successful!", 'success')
-            print("Login Successful!")  # Add this for debugging
+            # debugging code here: print("Login Successful!")
             return redirect(url_for('admin'))
         else:
-            # credentials are invalid, flash an error message and redirect to the same page
+            # if credentials are invalid, flash an error message and redirect to the same page
             flash("Login Failed! Please try again.", 'error')
-            print("Login Failed!")  # Add this for debugging
+            # debugging code here: print("Login Failed!")
             return redirect(url_for('admin'))
     else:
         # this handles the initial GET request, render the page without a message
         return render_template('admin.html')
 
 def check_credentials(entered_username, entered_password):
-    # Read data from the passcodes.txt file and check against entered credentials
+    # read data from the passcodes.txt file and check against entered credentials
     with open('passcodes.txt', 'r') as file:
         for line in file:
             username, password = map(str.strip, line.split(','))
-            print(f"Checking: {username}, {password}")
+            # debugging code here: print(f"Checking: {username}, {password}")
             if entered_username == username and entered_password == password:
                 return True
     return False
