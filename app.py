@@ -17,10 +17,19 @@ def index():
     
 @app.route('/reservation/', methods=('GET', 'POST'))
 def reservation():
+
     # add dropdown list options for reservation (rows and columns)
-    rows = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
-    seats = ['1', '2', '3', '4']
-    return render_template('reservation.html', rows=rows, seats=seats)
+    rows = ["Choose a Row", '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    seats = ["Choose a Seat", '1', '2', '3', '4']
+
+    # Get the path to the text file containing seating data
+    file_path = 'reservations.txt'  # Replace with the actual path
+
+    # Create the seat chart
+    seat_chart_data = create_seat_chart('reservations.txt')
+
+    return render_template('reservation.html', rows=rows, seats=seats, seat_chart=seat_chart_data)
+
         
 @app.route('/admin/', methods=('GET', 'POST'))
 def admin():
@@ -55,5 +64,17 @@ def check_credentials(entered_username, entered_password):
             if entered_username == username and entered_password == password:
                 return True
     return False
+
+# need to edit the file path
+def create_seat_chart(file_path):
+    seat_chart = [['o' for _ in range(4)] for _ in range(10)]
+
+    with open(file_path, 'r') as file:
+        for line in file:
+            _, row, seat, _ = line.strip().split(', ')
+            row, seat = int(row), int(seat)
+            seat_chart[row][seat] = 'x'
+
+    return seat_chart
 
 app.run(host="0.0.0.0", port=5002)
