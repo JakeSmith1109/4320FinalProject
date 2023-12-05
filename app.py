@@ -28,10 +28,10 @@ def reservation():
     # Create the seat chart
     seat_chart_data = create_seat_chart('reservations.txt')
 
-    return render_template('reservation.html', rows=rows, seats=seats, seat_chart=seat_chart_data)
+    return render_template('reservation.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)
 
         
-@app.route('/admin/', methods=('GET', 'POST'))
+@app.route('/admin', methods=('GET', 'POST'))
 def admin():
     if request.method == 'POST':
         # get the entered username and password from the form
@@ -44,16 +44,27 @@ def admin():
         if check_credentials(entered_username, entered_password):
             # if credentials are valid, flash a success message and redirect to the same page
             flash("Login Successful!", 'success')
+
+            # add dropdown list options for reservation (rows and columns)
+            rows = ["Choose a Row", '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+            seats = ["Choose a Seat", '1', '2', '3', '4']
+
+            # Get the path to the text file containing seating data
+            file_path = 'reservations.txt'  # Replace with the actual path
+
+            # Create the seat chart
+            seat_chart_data = create_seat_chart('reservations.txt')
+
             # debugging code here: print("Login Successful!")
-            return redirect(url_for('admin'))
+            return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)  # Replace with the actual template for the admin home page
         else:
             # if credentials are invalid, flash an error message and redirect to the same page
             flash("Login Failed! Please try again.", 'error')
             # debugging code here: print("Login Failed!")
-            return redirect(url_for('admin'))
+            return redirect(url_for('/admin'))
     else:
         # this handles the initial GET request, render the page without a message
-        return render_template('admin.html')
+        return render_template('/admin.html')
 
 def check_credentials(entered_username, entered_password):
     # read data from the passcodes.txt file and check against entered credentials
@@ -65,7 +76,6 @@ def check_credentials(entered_username, entered_password):
                 return True
     return False
 
-# need to edit the file path
 def create_seat_chart(file_path):
     seat_chart = [['o' for _ in range(4)] for _ in range(10)]
 
@@ -76,5 +86,23 @@ def create_seat_chart(file_path):
             seat_chart[row][seat] = 'x'
 
     return seat_chart
+
+
+
+@app.route('/admin')
+def adminHome():
+    
+    # add dropdown list options for reservation (rows and columns)
+    rows = ["Choose a Row", '1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
+    seats = ["Choose a Seat", '1', '2', '3', '4']
+
+    # Get the path to the text file containing seating data
+    file_path = 'reservations.txt'  # Replace with the actual path
+
+    # Create the seat chart
+    seat_chart_data = create_seat_chart('reservations.txt')
+
+    # Add the logic for the admin home page here
+    return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)  # Replace with the actual template for the admin home page
 
 app.run(host="0.0.0.0", port=5002)

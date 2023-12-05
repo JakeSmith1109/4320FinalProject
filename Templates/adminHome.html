@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator Login</title>
+    <style>
+        nav a {
+            color: #d64161;
+            font-size: 3em;
+            margin-left: 50px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('admin') }}">Admin</a>
+        <a href="{{ url_for('reservation') }}">Reservations</a>
+    </nav>
+
+    <hr>
+    <h1>Administrator Login</h1>
+
+    <!--random internal css-->
+    <style>
+        h3 {
+            display: inline-block;
+            margin-top: 0;
+        }
+
+        #poop {
+            margin: 10px;
+            margin-bottom: 20px;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            border: 2px solid black;
+            padding: 5px; /* Optional: Add padding for better visual appearance */
+        }
+
+    </style>
+    
+    <div>
+        <h3>x = Reserved Seat</h3>
+        <h3>o = Open Seat</h3>
+    </div>    
+
+    <div id = 'poop'>
+        <table>
+            {% for row in seat_chart %}
+                <tr>
+                    {% for seat in row %}
+                        <td>{{ seat }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <form action="{{ url_for('admin') }}" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+
+        <br>
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="text" id="password" name="password">
+
+        <br>
+        <br>
+
+        <input type="submit" value="login">
+    </form>
+
+    <div id="result">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <p>{{ messages[0] }}</p>
+            {% endif %}
+        {% endwith %}
+    </div>
+    
+</body>
+</html>
