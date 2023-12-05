@@ -77,7 +77,7 @@ def check_credentials(entered_username, entered_password):
     return False
 
 def create_seat_chart(file_path):
-    seat_chart = [['o' for _ in range(4)] for _ in range(10)]
+    seat_chart = [['o' for _ in range(4)] for _ in range(12)]
 
     with open(file_path, 'r') as file:
         for line in file:
