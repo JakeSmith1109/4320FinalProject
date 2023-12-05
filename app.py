@@ -53,7 +53,7 @@ def admin():
             file_path = 'reservations.txt'  # Replace with the actual path
 
             # Create the seat chart
-            seat_chart_data = create_seat_chart('reservations.txt')
+            seat_chart_data, initial_sales = create_seat_chart('reservations.txt')
 
             # debugging code here: print("Login Successful!")
             return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)  # Replace with the actual template for the admin home page
@@ -76,17 +76,38 @@ def check_credentials(entered_username, entered_password):
                 return True
     return False
 
+
+def get_cost_matrix():
+    cost_matrix = [[100, 75, 50, 100] for _ in range(12)]
+    return cost_matrix
+
+
 def create_seat_chart(file_path):
     seat_chart = [['o' for _ in range(4)] for _ in range(12)]
+    occupied_seats = 0  # Initialize a variable to count occupied seats
 
     with open(file_path, 'r') as file:
         for line in file:
             _, row, seat, _ = line.strip().split(', ')
             row, seat = int(row), int(seat)
             seat_chart[row][seat] = 'x'
+            occupied_seats += 1  # Increment the count for each occupied seat
 
-    return seat_chart
+    # Calculate total sales based on the cost matrix
+    cost_matrix = get_cost_matrix()
+    total_sales = calculate_total_sales(occupied_seats, cost_matrix)
 
+    return seat_chart, total_sales
+
+
+def calculate_total_sales(occupied_seats, cost_matrix):
+    total_sales = 0
+    for seat in range(occupied_seats):
+        # Assuming each row has the same cost structure, use modulo to repeat the cost pattern
+        cost = cost_matrix[0][seat % 4]
+        total_sales += cost
+
+    return total_sales
 
 
 @app.route('/admin')
@@ -100,9 +121,8 @@ def adminHome():
     file_path = 'reservations.txt'  # Replace with the actual path
 
     # Create the seat chart
-    seat_chart_data = create_seat_chart('reservations.txt')
+    seat_chart_data, total_sales = create_seat_chart('reservations.txt')
 
-    # Add the logic for the admin home page here
-    return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)  # Replace with the actual template for the admin home page
+    return render_template('adminHome.html', rows=rows, seats=seats, file_path=file_path, seat_chart=seat_chart_data, total_sales=total_sales)
 
 app.run(host="0.0.0.0", port=5002)
