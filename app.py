@@ -54,9 +54,13 @@ def admin():
 
             # Create the seat chart
             seat_chart_data = create_seat_chart('4320FinalProject/reservations.txt')
+            
+            cost_matrix=get_cost_matrix()
+            total_sales=get_total_sales(seat_chart_data,cost_matrix)
+            print(total_sales)
 
             # debugging code here: print("Login Successful!")
-            return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)  # Replace with the actual template for the admin home page
+            return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data,total_sales=total_sales)  # Replace with the actual template for the admin home page
         else:
             # if credentials are invalid, flash an error message and redirect to the same page
             flash("Login Failed! Please try again.", 'error')
@@ -80,6 +84,28 @@ def check_credentials(entered_username, entered_password):
 def get_cost_matrix():
     cost_matrix = [[100, 75, 50, 100] for _ in range(12)]
     return cost_matrix
+
+def get_total_sales(seat_chart, cost_matrix):
+    total_sales=0
+    rowNum=0
+    seatNum=0
+    #print(len(cost_matrix))
+    #print(len(seat_chart))
+    for row in seat_chart:
+        
+        for seat in row:
+           
+            #print([rowNum,seatNum])
+            
+            if seat=='x':
+                total_sales+=cost_matrix[rowNum][seatNum]
+                #print("COst: "+str(cost_matrix[rowNum][seatNum]))
+                #print(total_sales)
+            seatNum+=1
+        seatNum=0
+        rowNum+=1
+    return total_sales
+        
 
 
 def create_seat_chart(file_path):
