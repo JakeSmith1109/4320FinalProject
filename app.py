@@ -23,10 +23,10 @@ def reservation():
     seats = ["Choose a Seat", '1', '2', '3', '4']
 
     # Get the path to the text file containing seating data
-    file_path = 'reservations.txt'  # Replace with the actual path
+    file_path = '4320FinalProject/reservations.txt'  # Replace with the actual path
 
     # Create the seat chart
-    seat_chart_data = create_seat_chart('reservations.txt')
+    seat_chart_data = create_seat_chart('4320FinalProject/reservations.txt')
 
     return render_template('reservation.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)
 
@@ -50,10 +50,10 @@ def admin():
             seats = ["Choose a Seat", '1', '2', '3', '4']
 
             # Get the path to the text file containing seating data
-            file_path = 'reservations.txt'  # Replace with the actual path
+            file_path = '4320FinalProject/reservations.txt'  # Replace with the actual path
 
             # Create the seat chart
-            seat_chart_data = create_seat_chart('reservations.txt')
+            seat_chart_data = create_seat_chart('4320FinalProject/reservations.txt')
 
             # debugging code here: print("Login Successful!")
             return render_template('adminHome.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)  # Replace with the actual template for the admin home page
@@ -68,7 +68,7 @@ def admin():
 
 def check_credentials(entered_username, entered_password):
     # read data from the passcodes.txt file and check against entered credentials
-    with open('passcodes.txt', 'r') as file:
+    with open('4320FinalProject/passcodes.txt', 'r') as file:
         for line in file:
             username, password = map(str.strip, line.split(','))
             # debugging code here: print(f"Checking: {username}, {password}")
@@ -102,10 +102,10 @@ def adminHome():
     seats = ["Choose a Seat", '1', '2', '3', '4']
 
     # Get the path to the text file containing seating data
-    file_path = 'reservations.txt'  # Replace with the actual path
+    file_path = '4320FinalProject/reservations.txt'  # Replace with the actual path
 
     # Create the seat chart
-    seat_chart_data = create_seat_chart('reservations.txt')
+    seat_chart_data = create_seat_chart('4320FinalProject/reservations.txt')
 
     return render_template('adminHome.html', rows=rows, seats=seats, file_path=file_path, seat_chart=seat_chart_data)
 
