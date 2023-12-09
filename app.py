@@ -89,22 +89,28 @@ def admin():
             # if credentials are invalid, flash an error message and redirect to the same page
             flash("Login Failed! Please try again.", 'error')
             # debugging code here: print("Login Failed!")
-            return redirect(url_for('/admin'))
+            return redirect(url_for('admin'))
     else:
         # this handles the initial GET request, render the page without a message
         return render_template('/admin.html')
-
-def check_credentials(entered_username, entered_password):
-    # read data from the passcodes.txt file and check against entered credentials
-    with open('4320FinalProject/passcodes.txt', 'r') as file:
-        for line in file:
-            username, password = map(str.strip, line.split(','))
-            # debugging code here: print(f"Checking: {username}, {password}")
-            if entered_username == username and entered_password == password:
-                return True
-    return False
-
     
+def check_credentials(entered_username, entered_password):
+    user1 = "admin1"
+    user2 = "admin2"
+    user3 = "admin3"
+    pw1 = "12345"
+    pw2 = "24680" 
+    pw3 = "98765"
+    
+    if entered_username == user1 and entered_password == pw1:
+        return True
+    elif entered_username == user2 and entered_password == pw2:
+        return True
+    elif entered_username == user3 and entered_password == pw3:
+        return True
+    else:
+        return False
+ 
 
 def get_cost_matrix():
     cost_matrix = [[100, 75, 50, 100] for _ in range(12)]
