@@ -166,4 +166,4 @@ def adminHome():
 
     return render_template('adminHome.html', rows=rows, seats=seats, file_path=file_path, seat_chart=seat_chart_data)
 
-app.run(host="0.0.0.0", port=5002)
+app.run(host="0.0.0.0")#, port=5002)
