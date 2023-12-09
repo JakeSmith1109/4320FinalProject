@@ -37,14 +37,24 @@ def reservation():
         seat_choice = request.form.get('seat')
         print(first_name)
         
+        splicer = "INFOTC4320"
+        
+        # Determine the minimum length of the two words
+        min_length = min(len(first_name), len(splicer))
+
+        # Merge the words up to the length of the shorter word
+        e_ticket = ''.join([c1 + c2 for c1, c2 in zip(first_name, splicer)])
+
+        # Add the remaining characters of the longer word
+        e_ticket += first_name[min_length:] + splicer[min_length:]
+        
         with open('4320FinalProject/reservations.txt', 'a') as file:
             #write the user's inputs into reservations.txt
-            file.write(f"{first_name}, {row_choice}, {seat_choice}, {last_name}\n")  
+            file.write(f"{first_name}, {row_choice}, {seat_choice}, {e_ticket}\n")  
 
     return render_template('reservation.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)
 
  
-        
 @app.route('/admin', methods=('GET', 'POST'))
 def admin():
     if request.method == 'POST':
