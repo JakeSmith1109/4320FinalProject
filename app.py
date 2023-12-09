@@ -27,17 +27,19 @@ def reservation():
     file_path = '4320FinalProject/reservations.txt'  # Replace with the actual path
 
     # Create the seat chart
-    seat_chart_data = create_seat_chart('4320FinalProject/reservations.txt')
-    
+    seat_chart_data = create_seat_chart(file_path)
+    if request.method=="POST":
+
     #getting the input from the user
-    first_name = request.form.ge('firstName')
-    last_name = request.form.get('lastName')
-    row_choice = request.form.get('row')
-    seat_choice = request.form.get('seat')
-    
-    with open('4320FinalProject/reservations.txt', 'a') as file:
-        #write the user's inputs into reservations.txt
-        file.write(f"{first_name}, {row_choice}, {seat_choice}, {last_name}\n")  
+        first_name = request.form.get('firstName')
+        last_name = request.form.get('lastName')
+        row_choice = request.form.get('row')
+        seat_choice = request.form.get('seat')
+        print(first_name)
+        
+        with open('4320FinalProject/reservations.txt', 'a') as file:
+            #write the user's inputs into reservations.txt
+            file.write(f"{first_name}, {row_choice}, {seat_choice}, {last_name}\n")  
 
     return render_template('reservation.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)
 
