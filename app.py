@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
+import random, string
 
 # make a Flask application object called app
 app = Flask(__name__)
@@ -27,9 +28,20 @@ def reservation():
 
     # Create the seat chart
     seat_chart_data = create_seat_chart('4320FinalProject/reservations.txt')
+    
+    #getting the input from the user
+    first_name = request.form.ge('firstName')
+    last_name = request.form.get('lastName')
+    row_choice = request.form.get('row')
+    seat_choice = request.form.get('seat')
+    
+    with open('4320FinalProject/reservations.txt', 'a') as file:
+        #write the user's inputs into reservations.txt
+        file.write(f"{first_name}, {row_choice}, {seat_choice}, {last_name}\n")  
 
     return render_template('reservation.html', rows=rows, seats=seats, file_path = file_path, seat_chart=seat_chart_data)
 
+ 
         
 @app.route('/admin', methods=('GET', 'POST'))
 def admin():
@@ -80,6 +92,7 @@ def check_credentials(entered_username, entered_password):
                 return True
     return False
 
+    
 
 def get_cost_matrix():
     cost_matrix = [[100, 75, 50, 100] for _ in range(12)]
